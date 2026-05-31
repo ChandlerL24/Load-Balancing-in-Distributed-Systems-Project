@@ -1,0 +1,107 @@
+Metadata-Version: 2.4
+Name: load-balancing-simulation
+Version: 0.1.0
+Summary: Load Balancing in Distributed Systems - Final Project
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: matplotlib>=3.7.0
+Requires-Dist: scipy>=1.10.0
+Provides-Extra: dev
+Requires-Dist: pdoc3; extra == "dev"
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: ruff>=0.6; extra == "dev"
+
+# Load Balancing Simulation
+
+MPCS 56430 Final Project
+
+## What This Does
+
+Simulates a bunch of servers handling requests and compares how different load balancing strategies perform:
+
+- **Round-Robin** - cycles through servers one by one
+- **Random** - picks a random server
+- **Least Connections** - sends to whichever server is least busy
+
+Tracks stuff like response times, how busy each server is, queue lengths, etc.
+
+## Setup
+
+```bash
+# need python 3.10+
+python3 --version
+
+# on midway do this first
+module load python/3.11
+
+# then
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -e ".[dev]"
+
+# make sure it works
+pytest
+```
+
+## Running It
+
+### Locally
+```bash
+python -m load_balancing.simulation
+```
+
+### On Midway (interactive)
+```bash
+sinteractive --partition=caslake --time=01:00:00 --mem=4G
+module load python/3.11
+source .venv/bin/activate
+python -m load_balancing.simulation
+```
+
+### On Midway (batch)
+```bash
+sbatch scripts/run_simulation.sbatch
+squeue -u $USER  # check status
+```
+
+## Files
+
+```
+src/load_balancing/
+    server.py         - Server and Request classes
+    load_balancer.py  - the three balancing strategies
+    simulation.py     - main sim loop
+    metrics.py        - tracking performance
+    visualization.py  - plots
+
+tests/
+    test_simulation.py
+
+scripts/
+    run_simulation.sbatch  - slurm job script
+    setup_env.sh           - env setup helper
+```
+
+## How It Works
+
+1. Requests come in following a Poisson process (rate λ)
+2. Each server processes them with exponential service times
+3. Load balancer decides which server gets each request
+4. We track everything and compare the strategies
+
+## Commands
+
+```bash
+pytest                              # run tests
+pytest -v                           # verbose
+python -m load_balancing.simulation # run sim
+ruff check src tests                # lint
+ruff check src tests --fix          # auto-fix
+```
+
+## References
+
+- Tanenbaum & Van Steen - Distributed Systems book
+- Mitzenmacher (2001) - Power of Two Choices paper

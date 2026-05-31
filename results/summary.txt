@@ -1,0 +1,38 @@
+Load Balancing Results
+==================================================
+
+Params:
+  num_servers: 5
+  arrival_rate: 10.0
+  service_rate: 3.0
+  duration: 1000.0
+  queue_capacity: -1
+  seed: 42
+
+
+Round-Robin:
+  Completed: 9957
+  Rejected: 0
+  Throughput: 9.96
+  Avg response: 0.6543
+  Avg wait: 0.3245
+  P95 response: 1.9987
+  Avg util: 65.68%
+
+Random:
+  Completed: 9957
+  Rejected: 0
+  Throughput: 9.96
+  Avg response: 1.0233
+  Avg wait: 0.6935
+  P95 response: 3.1028
+  Avg util: 65.68%
+
+Least-Connections:
+  Completed: 9957
+  Rejected: 0
+  Throughput: 9.96
+  Avg response: 0.4347
+  Avg wait: 0.1049
+  P95 response: 1.2832
+  Avg util: 65.68%
