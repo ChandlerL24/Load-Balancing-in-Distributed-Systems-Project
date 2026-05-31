@@ -1,7 +1,5 @@
 # Load Balancing Simulation
 
-*MPCS 56430 Final Project*
-
 ## What This Is
 
 Imagine you've got a website and a pile of incoming traffic. You don't run that
